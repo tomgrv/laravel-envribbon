@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'enabled' => env('APP_RIBBON', true),
 
     /*
@@ -12,15 +11,13 @@ return [
     | Here you can change the ribbon's display behavior
     |
     | For more detailed instructions you can look here:
-    | https://github.com/perspikapps/LaravelEnvRibbon/#Environments
+    | https://github.com/perspikapps/EnvRibbon/#Environments
     |
     */
 
     'environments' => [
-
         'production' => [
-            'visible' =>
-            env('APP_DEBUG', false),
+            'visible' => env('APP_DEBUG', false),
             'color' => 'limeGreen',
         ],
 
@@ -32,7 +29,6 @@ return [
         '*' => [
             'visible' => true,
             'color' => 'crimson',
-        ]
-    ]
-
+        ],
+    ],
 ];

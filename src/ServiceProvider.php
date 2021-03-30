@@ -1,48 +1,44 @@
 <?php
 
-namespace Perspikapps\LaravelEnvRibbon;
+namespace Perspikapps\EnvRibbon;
 
-use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
-use AvtoDev\AppVersion\AppVersionManager;
 use Illuminate\Contracts\Http\Kernel;
-use Perspikapps\LaravelEnvRibbon\Middleware\InjectLaravelEnvRibbon;
+use Perspikapps\EnvRibbon\Middleware\InjectEnvRibbon;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    const CONFIG_PATH = __DIR__ . '/../config/laravel-env-ribbon.php';
+    const CONFIG_PATH = __DIR__.'/../config/env-ribbon.php';
 
     public function boot()
     {
         $this->publishes([
-            self::CONFIG_PATH => config_path('laravel-env-ribbon.php'),
-        ], 'laravel-env-ribbon');
+            self::CONFIG_PATH => config_path('env-ribbon.php'),
+        ], 'env-ribbon');
 
-
-        $this->registerMiddleware(InjectLaravelEnvRibbon::class);
+        $this->registerMiddleware(InjectEnvRibbon::class);
     }
 
     public function register()
     {
         $this->mergeConfigFrom(
             self::CONFIG_PATH,
-            'laravel-env-ribbon'
+            'env-ribbon'
         );
 
         /*
-        * Register the service provider for the dependency.
-        */
+         * Register the service provider for the dependency.
+         */
         $this->app->register(\AvtoDev\AppVersion\ServiceProvider::class);
 
-        $this->app->singleton(LaravelEnvRibbon::class, function ($app) {
-            return new LaravelEnvRibbon($app, $app->make('AvtoDev\AppVersion\AppVersionManagerInterface'));
+        $this->app->singleton(EnvRibbon::class, function ($app) {
+            return new EnvRibbon($app, $app->make('AvtoDev\AppVersion\AppVersionManagerInterface'));
         });
     }
 
     /**
-     * Register the Middleware
+     * Register the Middleware.
      *
-     * @param  string $middleware
+     * @param string $middleware
      */
     protected function registerMiddleware($middleware)
     {
@@ -57,6 +53,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function provides()
     {
-        return [LaravelEnvRibbon::class];
+        return [EnvRibbon::class];
     }
 }

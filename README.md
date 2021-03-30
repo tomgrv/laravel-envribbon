@@ -2,12 +2,12 @@
 
 # Laravel Env Ribbon
 
-[![GitHub Workflow Status](https://github.com/perspikapps/laravel-env-ribbon/workflows/Run%20tests/badge.svg)](https://github.com/perspikapps/laravel-env-ribbon/actions)
+[![GitHub Workflow Status](https://github.com/perspikapps/env-ribbon/workflows/Run%20tests/badge.svg)](https://github.com/perspikapps/env-ribbon/actions)
 [![styleci](https://styleci.io/repos/CHANGEME/shield)](https://styleci.io/repos/CHANGEME)
 
-[![Packagist](https://img.shields.io/packagist/v/perspikapps/laravel-env-ribbon.svg)](https://packagist.org/packages/perspikapps/laravel-env-ribbon)
-[![Packagist](https://poser.pugx.org/perspikapps/laravel-env-ribbon/d/total.svg)](https://packagist.org/packages/perspikapps/laravel-env-ribbon)
-[![Packagist](https://img.shields.io/packagist/l/perspikapps/laravel-env-ribbon.svg)](https://packagist.org/packages/perspikapps/laravel-env-ribbon)
+[![Packagist](https://img.shields.io/packagist/v/perspikapps/env-ribbon.svg)](https://packagist.org/packages/perspikapps/env-ribbon)
+[![Packagist](https://poser.pugx.org/perspikapps/env-ribbon/d/total.svg)](https://packagist.org/packages/perspikapps/env-ribbon)
+[![Packagist](https://img.shields.io/packagist/l/perspikapps/env-ribbon.svg)](https://packagist.org/packages/perspikapps/env-ribbon)
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
@@ -20,13 +20,13 @@ This package displays a top-left corner ribbon with APP_ENV value & version numb
 Install via composer
 
 ```bash
-composer require perspikapps/laravel-env-ribbon
+composer require perspikapps/env-ribbon
 ```
 
 ### Publish package assets
 
 ```bash
-php artisan vendor:publish --provider="Perspikapps\LaravelEnvRibbon\ServiceProvider"
+php artisan vendor:publish --provider="Perspikapps\EnvRibbon\ServiceProvider"
 ```
 
 ## Usage
@@ -69,8 +69,8 @@ instead of using the issue tracker.
 
 ## Credits
 
--   [](https://github.com/perspikapps/laravel-env-ribbon)
--   [All contributors](https://github.com/perspikapps/laravel-env-ribbon/graphs/contributors)
+-   [](https://github.com/perspikapps/env-ribbon)
+-   [All contributors](https://github.com/perspikapps/env-ribbon/graphs/contributors)
 
 This package is bootstrapped with the help of
 [melihovv/laravel-package-generator](https://github.com/melihovv/laravel-package-generator).

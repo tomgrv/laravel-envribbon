@@ -1,14 +1,13 @@
 <?php
 
-namespace Perspikapps\LaravelEnvRibbon;
+namespace Perspikapps\EnvRibbon;
 
-
-use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Str;
 use AvtoDev\AppVersion\AppVersionManager;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class LaravelEnvRibbon
+class EnvRibbon
 {
     /**
      * The Laravel application instance.
@@ -18,7 +17,7 @@ class LaravelEnvRibbon
     protected $app;
 
     /**
-     * True when enabled, false disabled an null for still unknown
+     * True when enabled, false disabled an null for still unknown.
      *
      * @var bool
      */
@@ -58,10 +57,8 @@ class LaravelEnvRibbon
     }
 
     /**
-     * Modify the response and inject the ribbon (or data in headers)
+     * Modify the response and inject the ribbon (or data in headers).
      *
-     * @param  \Symfony\Component\HttpFoundation\Request $request
-     * @param  \Symfony\Component\HttpFoundation\Response $response
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function modifyResponse(Request $request, Response $response)
@@ -74,33 +71,38 @@ class LaravelEnvRibbon
         $content = $response->getContent();
 
         if (($head = mb_strpos($content, '</head>')) !== false) {
-            $content = mb_substr($content, 0, $head) .
+            $content = mb_substr($content, 0, $head).
                 '<style>'
-                . file_get_contents(__DIR__ . '/../resources/laravel-env-ribbon.css') .
-                '</style>' .
+                .file_get_contents(__DIR__.'/../resources/env-ribbon.css').
+                '</style>'.
                 mb_substr($content, $head);
         }
 
-        if (($body = mb_strpos($content, '</body>')) !== false) {
-            $content = mb_substr($content, 0, $body) .
-                '<div class="laravel-env-ribbon" style="--ribbon-color : ' . $this->color . ';">
-                    <a href="#">' . $this->app->environment() . ' ' .   $this->appversion->version() . '</a>
-                </div>' .
+        if (($body = mb_strpos($content, '<body')) !== false) {
+            $body = mb_strpos($content, '>', $body) + 1;
+
+            $content = mb_substr($content, 0, $body).
+                '<div class="env-ribbon shadow top-left sticky" style="--ribbon-color:'.$this->color.';--ribbon-width:25em; ">
+                        '.$this->app->environment().' '.$this->appversion->version().'
+                </div>'.
                 mb_substr($content, $body);
         }
 
-        $response->setContent($content);
+        if ($content) {
+            $response->setContent($content);
+        }
     }
 
     /**
-     * Check if the ribbon is enabled
-     * @return boolean
+     * Check if the ribbon is enabled.
+     *
+     * @return bool
      */
     public function isEnabled()
     {
-        if ($this->enabled === null) {
+        if (null === $this->enabled) {
             $config = $this->app['config'];
-            $configEnabled = value($config->get('laravel-env-ribbon.enabled'));
+            $configEnabled = value($config->get('env-ribbon.enabled'));
 
             $this->enabled = $configEnabled && !$this->app->runningInConsole();
         }
@@ -108,17 +110,17 @@ class LaravelEnvRibbon
         return $this->enabled;
     }
 
-
     /**
-     * Check if the ribbon is enabled
-     * @return boolean
+     * Check if the ribbon is enabled.
+     *
+     * @return bool
      */
     public function loadConfig()
     {
         $current = $this->app->environment();
 
         $config = $this->app['config'];
-        $environments = value($config->get('laravel-env-ribbon.environments'));
+        $environments = value($config->get('env-ribbon.environments'));
 
         $index = key_exists($current, $environments) ? $current : '*';
 

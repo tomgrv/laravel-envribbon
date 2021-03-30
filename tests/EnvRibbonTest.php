@@ -1,12 +1,12 @@
 <?php
 
-namespace Perspikapps\LaravelEnvRibbon\Tests;
+namespace Perspikapps\EnvRibbon\Tests;
 
-use Perspikapps\LaravelEnvRibbon\Facades\LaravelEnvRibbon;
-use Perspikapps\LaravelEnvRibbon\ServiceProvider;
 use Orchestra\Testbench\TestCase;
+use Perspikapps\EnvRibbon\Facades\EnvRibbon;
+use Perspikapps\EnvRibbon\ServiceProvider;
 
-class LaravelEnvRibbonTest extends TestCase
+class EnvRibbonTest extends TestCase
 {
     protected function getPackageProviders($app)
     {
@@ -16,7 +16,7 @@ class LaravelEnvRibbonTest extends TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'laravel-env-ribbon' => LaravelEnvRibbon::class,
+            'env-ribbon' => EnvRibbon::class,
         ];
     }
 

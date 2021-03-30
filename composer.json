@@ -1,5 +1,5 @@
 {
-    "name": "tomgrv/laravel-env-ribbon",
+    "name": "perspikapps/env-ribbon",
     "description": "A laravel env ribbon",
     "license": "MIT",
     "keywords": [
@@ -11,7 +11,7 @@
     "authors": [
         {
             "name": "@tomgrv",
-            "email": "tomgrv@user.perspikapps.fr"
+            "email": "tomgrv@users.perspikapps.fr"
         }
     ],
     "require": {
@@ -21,25 +21,42 @@
     },
     "require-dev": {
         "orchestra/testbench": "^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "^8.4|^9.0"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "nunomaduro/phpinsights": "dev-master",
+        "phpunit/phpunit": "^9.0",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
-            "Perspikapps\\LaravelEnvRibbon\\": "src"
+            "Perspikapps\\EnvRibbon\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Perspikapps\\LaravelEnvRibbon\\Tests\\": "tests"
+            "Perspikapps\\EnvRibbon\\Tests\\": "tests"
         }
     },
     "scripts": {
-        "phpunit": "phpunit"
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
+        ],
+        "lint": [
+            "php-cs-fixer fix -v --config=.php_cs --using-cache=no"
+        ],
+        "lint-check": [
+            "php-cs-fixer fix -v --config=.php_cs --using-cache=no --dry-run"
+        ],
+        "test": [
+            "phpunit --coverage-text"
+        ]
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Perspikapps\\LaravelEnvRibbon\\ServiceProvider"
+                "Perspikapps\\EnvRibbon\\ServiceProvider"
             ]
         }
     },

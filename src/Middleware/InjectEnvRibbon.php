@@ -1,28 +1,24 @@
 <?php
 
-namespace Perspikapps\LaravelEnvRibbon\Middleware;
+namespace Perspikapps\EnvRibbon\Middleware;
 
-use Error;
 use Closure;
-use Exception;
-use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Perspikapps\LaravelEnvRibbon\LaravelEnvRibbon;
+use Perspikapps\EnvRibbon\EnvRibbon;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class InjectLaravelEnvRibbon
+class InjectEnvRibbon
 {
     /**
-     * The App container
+     * The App container.
      *
      * @var Container
      */
     protected $container;
 
     /**
-     * The DebugBar instance
+     * The DebugBar instance.
      *
      * @var LaravelDebugbar
      */
@@ -30,11 +26,8 @@ class InjectLaravelEnvRibbon
 
     /**
      * Create a new middleware instance.
-     *
-     * @param  Container $container
-     * @param  LaravelEnvRibbon $envribbon
      */
-    public function __construct(Container $container, LaravelEnvRibbon $envribbon)
+    public function __construct(Container $container, EnvRibbon $envribbon)
     {
         $this->container = $container;
         $this->envribbon = $envribbon;
@@ -43,8 +36,8 @@ class InjectLaravelEnvRibbon
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
+     * @param Request $request
+     *
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
