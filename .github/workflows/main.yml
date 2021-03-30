@@ -1,48 +1,65 @@
-name: Run tests
+# @format
+
+name: main
 
 on:
-  push:
-  schedule:
-    - cron: '0 0 * * *'
-
+    pull_request:
+        types: [assigned, opened, synchronize, reopened]
+    push:
+        branches:
+            - main
+            - develop
+            - 'releases/**'
+            - 'features/**'
 jobs:
-  php-tests:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        php: [7.4, 7.3, 7.2]
-        laravel: [7.*, 6.*]
-        dependency-version: [prefer-lowest, prefer-stable]
-        os: [ubuntu-latest, windows-latest]
-        include:
-          - laravel: 8.*
-            testbench: 6.*
-          - laravel: 7.*
-            testbench: 5.*
-          - laravel: 6.*
-            testbench: 4.*
-        exclude:
-          - laravel: 8.*
-            php: 7.2
-
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v1
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
-          coverage: none
-
-      - name: Install dependencies
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
-
-      - name: Execute tests
-        run: ./vendor/bin/phpunit
+    version:
+        name: Calculate Version
+        runs-on: ubuntu-latest
+        outputs:
+          semVer: ${{ steps.gitversion.outputs.semVer }} # To use an output in another job, you have to map it to a job output.
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+            - name: Install GitVersion
+              uses: gittools/actions/gitversion/setup@v0.9.7
+              with:
+                  versionSpec: '5.x'
+            - name: Determine Version
+              id: gitversion
+              uses: gittools/actions/gitversion/execute@v0.9.7
+            - name: Display SemVer
+              run: |
+                  echo "SemVer: $GITVERSION_SEMVER"
+    tests:
+        name: Continuous Integration
+        runs-on: ubuntu-latest
+        needs: version
+        env:
+            APP_ENV: testing
+            SEMVER: ${{ needs.version.outputs.semVer }}
+        steps:
+            - uses: actions/checkout@v2
+            - name: Set Version
+              run: echo $SEMVER > VERSION
+            - uses: c-hive/gha-npm-cache@v1
+            - name: Setup Node.js
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: '12'
+                  check-latest: true
+            - name: Install npm dependencies
+              run: npm install
+            - name: Run JS tests
+              run: npm run test
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.4 # Use your PHP version
+                  extensions: mbstring, bcmath # Setup any required extensions for tests
+            - name: Install composer dependencies
+              uses: ramsey/composer-install@v1
+            - name: Run PHP Tests
+              run: |
+                  php artisan env
+                  composer test
