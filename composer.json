@@ -1,6 +1,6 @@
 {
-    "name": "perspikapps/env-ribbon",
-    "description": "A laravel env ribbon",
+    "name": "tomgrv/laravel-envribbon",
+    "description": "A laravel ribbon to display current environement",
     "license": "MIT",
     "keywords": [
         "laravel",
