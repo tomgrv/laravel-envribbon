@@ -11,7 +11,7 @@ return [
     | Here you can change the ribbon's display behavior
     |
     | For more detailed instructions you can look here:
-    | https://github.com/perspikapps/EnvRibbon/#Environments
+    | https://github.com/tomgrv/envribbon/#Environments
     |
     */
 
