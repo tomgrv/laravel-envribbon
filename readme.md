@@ -2,9 +2,6 @@
 
 # Laravel Env Ribbon
 
-[![GitHub Workflow Status](https://github.com/perspikapps/laravel-envribbon/workflows/Run%20tests/badge.svg)](https://github.com/perspikapps/laravel-envribbon/actions)
-[![styleci](https://styleci.io/repos/CHANGEME/shield)](https://styleci.io/repos/CHANGEME)
-
 [![Packagist](https://img.shields.io/packagist/v/perspikapps/laravel-envribbon.svg)](https://packagist.org/packages/perspikapps/laravel-envribbon)
 [![Packagist](https://poser.pugx.org/perspikapps/laravel-envribbon/d/total.svg)](https://packagist.org/packages/perspikapps/laravel-envribbon)
 [![Packagist](https://img.shields.io/packagist/l/perspikapps/laravel-envribbon.svg)](https://packagist.org/packages/perspikapps/laravel-envribbon)
@@ -13,7 +10,9 @@
 
 [![Buy me a coffee](https://badgen.net/badge/buymeacoffe/tomgrv/yellow?icon=buymeacoffee)](https://buymeacoffee.com/tomgrv)
 
-This package displays a top-left corner ribbon with APP_ENV value & version number on all pages
+This package displays automaticaly a top-left corner ribbon with APP_ENV value & version number on all pages, depending on APP_ENV value & associated config:
+
+![capture](./doc/assets/capture.png)
 
 ## Installation
 
@@ -69,4 +68,5 @@ instead of using the issue tracker.
 
 ## Credits
 
--   [tomgrv](https://github.com/tomgrv/laravel-envribbon/graphs/contributors)
+-   [tomgrv](https://github.com/tomgrv)
+-   [avto-dev](https://github.com/avto-dev)
