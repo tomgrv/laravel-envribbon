@@ -1,12 +1,11 @@
 <?php
 
-namespace Perspikapps\EnvRibbon\Middleware;
+namespace Perspikapps\LaravelEnvRibbon\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Container\Container;
-use Perspikapps\EnvRibbon\EnvRibbon;
+use Perspikapps\LaravelEnvRibbon\EnvRibbon;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class InjectEnvRibbon
 {
@@ -42,7 +41,7 @@ class InjectEnvRibbon
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (!$this->envribbon->isEnabled()) {
+        if (! $this->envribbon->isEnabled()) {
             return $next($request);
         }
 
