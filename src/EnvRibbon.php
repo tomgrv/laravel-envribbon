@@ -1,6 +1,6 @@
 <?php
 
-namespace Perspikapps\EnvRibbon;
+namespace Perspikapps\LaravelEnvRibbon;
 
 use AvtoDev\AppVersion\AppVersionManager;
 use Illuminate\Support\Str;
@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnvRibbon
 {
+    const RESSOURCES_PATH = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR;
+
     /**
      * The Laravel application instance.
      *
@@ -36,7 +38,7 @@ class EnvRibbon
      */
     public function __construct($app = null, AppVersionManager $appversion)
     {
-        if (!$app) {
+        if (! $app) {
             $app = app();   //Fallback when $app is not given
         }
 
@@ -64,7 +66,7 @@ class EnvRibbon
     public function modifyResponse(Request $request, Response $response)
     {
         $app = $this->app;
-        if (!$this->isEnabled() || !$this->visible) {
+        if (! $this->isEnabled() || ! $this->visible) {
             return $response;
         }
 
@@ -73,7 +75,7 @@ class EnvRibbon
         if (($head = mb_strpos($content, '</head>')) !== false) {
             $content = mb_substr($content, 0, $head).
                 '<style>'
-                .file_get_contents(__DIR__.'/../resources/env-ribbon.css').
+                .file_get_contents(self::RESSOURCES_PATH.'env-ribbon.css').
                 '</style>'.
                 mb_substr($content, $head);
         }
@@ -104,7 +106,7 @@ class EnvRibbon
             $config = $this->app['config'];
             $configEnabled = value($config->get('env-ribbon.enabled'));
 
-            $this->enabled = $configEnabled && !$this->app->runningInConsole();
+            $this->enabled = $configEnabled && ! $this->app->runningInConsole();
         }
 
         return $this->enabled;

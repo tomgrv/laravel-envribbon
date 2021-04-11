@@ -1,10 +1,9 @@
 <?php
 
-namespace Perspikapps\EnvRibbon\Tests;
+namespace Perspikapps\LaravelEnvRibbon\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Perspikapps\EnvRibbon\Facades\EnvRibbon;
-use Perspikapps\EnvRibbon\ServiceProvider;
+use Perspikapps\LaravelEnvRibbon\Facades\EnvRibbon;
 
 class EnvRibbonTest extends TestCase
 {

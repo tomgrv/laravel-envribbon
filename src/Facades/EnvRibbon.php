@@ -1,13 +1,18 @@
 <?php
 
-namespace Perspikapps\EnvRibbon\Facades;
+namespace Perspikapps\LaravelEnvRibbon\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 class EnvRibbon extends Facade
 {
-    protected static function getFacadeAccessor()
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor(): string
     {
-        return 'env-ribbon';
+        return 'envribbon';
     }
 }
